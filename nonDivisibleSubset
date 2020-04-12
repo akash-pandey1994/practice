@@ -1,0 +1,30 @@
+public static int nonDivisibleSubset(int k, List<Integer> s) {
+		// Write your code here
+		int maxSizeOfSubset = 0;
+		List<Integer> nonDivSet = new ArrayList<Integer>();
+		for (int i = 0; i < s.size(); i++) {
+
+			nonDivSet.add(s.get(i));
+			for (int j = 0; j < s.size(); j++) {
+				boolean isDiv = true;
+				if (i != j) {
+					if ((s.get(i) + s.get(j)) % k != 0) {
+						for (int num : nonDivSet) {
+							if ((s.get(j) + num) % k == 0) {
+								isDiv = false;
+								break;
+							}
+						}
+						if (isDiv)
+							nonDivSet.add(s.get(j));
+					}
+				}
+			}
+			if (maxSizeOfSubset < nonDivSet.size()) {
+				maxSizeOfSubset = nonDivSet.size();
+			}
+			nonDivSet = new ArrayList<Integer>();
+		}
+
+		return maxSizeOfSubset;
+	}
